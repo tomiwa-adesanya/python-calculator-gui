@@ -56,13 +56,44 @@ class Calculator(tk.Tk):
         #---------------------------------------------------------------
         #                           ENTRY
         #---------------------------------------------------------------
-        entry_var = tk.StringVar()
-        entry = Entry(self, textvariable=entry_var, width=35, **widget_attr)
-        entry.bind(
-            "<Return>", lambda event=None: entry_var.set(self.evaluate(entry_var.get())), add="+"
-        )
-        entry.focus() # Sets typing cursor to entry when window is created
-        entry.grid(
+        self.entry_var = tk.StringVar()
+        self.entry= Entry(self, textvariable=self.entry_var, width=35, **widget_attr)
+        
+        #                       ENTRY RELATED EVENT BINDINGS
+        self.entry.bind(
+            "<Return>", lambda event=None: self.entry_var.set(self.evaluate(self.entry_var.get())), add="+"
+        ) # Evaluates arithmetic expression when user presses "Enter" key when entry is focused
+        self.bind(
+            "<Control-Alt-BackSpace>", lambda event=None: self.entry_var.set("")
+        ) # Clears entry input when user presses Ctrl+Alt+BackSpace
+        self.bind(
+            "<Return>", lambda event=None: self.entry_var.set(self.evaluate(self.entry_var.get())), add="+"
+        ) # Evaluates arithmetic expression when user presses "Enter" key
+        self.bind(
+            "<BackSpace>", lambda event=None: self.entry_var.set(self.entry_var.get()[:-1]), add="+"
+        ) # Deletes the last inputed value when user presses the "Backspace" key
+
+        self.bind("<KeyPress-0>", lambda event=None: self.keypress_action("0"), add="+")
+        self.bind("<KeyPress-1>", lambda event=None: self.keypress_action("1"), add="+")
+        self.bind("<KeyPress-2>", lambda event=None: self.keypress_action("2"), add="+")
+        self.bind("<KeyPress-3>", lambda event=None: self.keypress_action("3"), add="+")
+        self.bind("<KeyPress-4>", lambda event=None: self.keypress_action("4"), add="+")
+        self.bind("<KeyPress-5>", lambda event=None: self.keypress_action("5"), add="+")
+        self.bind("<KeyPress-6>", lambda event=None: self.keypress_action("6"), add="+")
+        self.bind("<KeyPress-7>", lambda event=None: self.keypress_action("7"), add="+")
+        self.bind("<KeyPress-8>", lambda event=None: self.keypress_action("8"), add="+")
+        self.bind("<KeyPress-9>", lambda event=None: self.keypress_action("9"), add="+")
+        self.bind("<KeyPress-(>", lambda event=None: self.keypress_action("("), add="+")
+        self.bind("<KeyPress-)>", lambda event=None: self.keypress_action(")"), add="+")
+        self.bind("<KeyPress-+>", lambda event=None: self.keypress_action(" + "), add="+")
+        self.bind("<KeyPress-\->", lambda event=None: self.keypress_action(" - "), add="+")
+        self.bind("<KeyPress-*>", lambda event=None: self.keypress_action(" x "), add="+")
+        self.bind("<KeyPress-/>", lambda event=None: self.keypress_action(" / "), add="+")
+        self.bind("<KeyPress-%>", lambda event=None: self.keypress_action("% "), add="+")
+        
+        #-----------------------------------------------------------------------------------
+        self.entry.focus() # Sets typing cursor to self.entrywhen window is created
+        self.entry.grid(
             column=0, row=0,
             columnspan=3,
             ipadx=15, ipady=23.5,
@@ -70,12 +101,11 @@ class Calculator(tk.Tk):
             sticky="nw"
         )
         
-
         #-----------------------------------------------------------------------------------
         #                            BUTTONS CONFIGURATION
         #-----------------------------------------------------------------------------------
 
-        btn_percent = Button(self, text="%", command=lambda: entry_var.set(entry_var.get() + "% "))
+        btn_percent = Button(self, text="%", command=lambda: self.entry_var.set(self.entry_var.get() + "% "))
         btn_percent.grid(
             column=0, row=1,
             sticky="nw",
@@ -83,13 +113,13 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_ce = Button(self, text="CE", command=lambda: entry_var.set(""))
+        btn_ce = Button(self, text="CE", command=lambda: self.entry_var.set(""))
         btn_ce.grid(
             column=1, row=1,
             **btn_ipad
         )
 
-        btn_equals = Button(self, text="=", command=lambda : entry_var.set(self.evaluate(entry_var.get())))
+        btn_equals = Button(self, text="=", command=lambda : self.entry_var.set(self.evaluate(self.entry_var.get())))
         btn_equals.grid(
             column=2, row=1,
             sticky="ne",
@@ -97,7 +127,7 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_x = Button(self, text="X", command=lambda: entry_var.set(entry_var.get() + " x "))
+        btn_x = Button(self, text="X", command=lambda: self.entry_var.set(self.entry_var.get() + " x "))
         btn_x.grid(
             column=0, row=2,
             sticky="nw",
@@ -105,13 +135,13 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_div = Button(self, text="/", command=lambda: entry_var.set(entry_var.get() + " / "))
+        btn_div = Button(self, text="/", command=lambda: self.entry_var.set(self.entry_var.get() + " / "))
         btn_div.grid(
             column=1, row=2,
             **btn_ipad
         )
 
-        btn_pow = Button(self, text="^", command=lambda: entry_var.set(entry_var.get() + " ^ "))
+        btn_pow = Button(self, text="^", command=lambda: self.entry_var.set(self.entry_var.get() + " ^ "))
         btn_pow.grid(
             column=2, row=2,
             sticky="ne",
@@ -119,7 +149,7 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_7 = Button(self, text="7", command=lambda: entry_var.set(entry_var.get() + "7"))
+        btn_7 = Button(self, text="7", command=lambda: self.entry_var.set(self.entry_var.get() + "7"))
         btn_7.grid(
             column=0, row=3,
             sticky="nw",
@@ -127,13 +157,13 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_8 = Button(self, text="8", command=lambda: entry_var.set(entry_var.get() + "8"))
+        btn_8 = Button(self, text="8", command=lambda: self.entry_var.set(self.entry_var.get() + "8"))
         btn_8.grid(
             column=1, row=3,
             **btn_ipad
         )
 
-        btn_9 = Button(self, text="9", command=lambda: entry_var.set(entry_var.get() + "9"))
+        btn_9 = Button(self, text="9", command=lambda: self.entry_var.set(self.entry_var.get() + "9"))
         btn_9.grid(
             column=2, row=3,
             sticky="ne",
@@ -141,7 +171,7 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_4 = Button(self, text="4", command=lambda: entry_var.set(entry_var.get() + "4"))
+        btn_4 = Button(self, text="4", command=lambda: self.entry_var.set(self.entry_var.get() + "4"))
         btn_4.grid(
             column=0, row=4,
             sticky="nw",
@@ -149,13 +179,13 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_5 = Button(self, text="5", command=lambda: entry_var.set(entry_var.get() + "5"))
+        btn_5 = Button(self, text="5", command=lambda: self.entry_var.set(self.entry_var.get() + "5"))
         btn_5.grid(
             column=1, row=4,
             **btn_ipad
         )
 
-        btn_6 = Button(self, text="6", command=lambda: entry_var.set(entry_var.get() + "6"))
+        btn_6 = Button(self, text="6", command=lambda: self.entry_var.set(self.entry_var.get() + "6"))
         btn_6.grid(
             column=2, row=4,
             sticky="ne",
@@ -163,7 +193,7 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_1 = Button(self, text="1", command=lambda: entry_var.set(entry_var.get() + "1"))
+        btn_1 = Button(self, text="1", command=lambda: self.entry_var.set(self.entry_var.get() + "1"))
         btn_1.grid(
             column=0, row=5,
             sticky="nw",
@@ -171,13 +201,13 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_2 = Button(self, text="2", command=lambda: entry_var.set(entry_var.get() + "2"))
+        btn_2 = Button(self, text="2", command=lambda: self.entry_var.set(self.entry_var.get() + "2"))
         btn_2.grid(
             column=1, row=5,
             **btn_ipad
         )
 
-        btn_3 = Button(self, text="3", command=lambda: entry_var.set(entry_var.get() + "3"))
+        btn_3 = Button(self, text="3", command=lambda: self.entry_var.set(self.entry_var.get() + "3"))
         btn_3.grid(
             column=2, row=5, 
             sticky="ne",
@@ -185,7 +215,7 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
         
-        btn_plus = Button(self, text="+", command=lambda: entry_var.set(entry_var.get() + " + "))
+        btn_plus = Button(self, text="+", command=lambda: self.entry_var.set(self.entry_var.get() + " + "))
         btn_plus.grid(
             column=0, row=6,
             sticky="nw",
@@ -193,13 +223,13 @@ class Calculator(tk.Tk):
             **btn_ipad
         )
 
-        btn_0 = Button(self, text="0", command=lambda: entry_var.set(entry_var.get() + "0"))
+        btn_0 = Button(self, text="0", command=lambda: self.entry_var.set(self.entry_var.get() + "0"))
         btn_0.grid(
             column=1, row=6,
             **btn_ipad
         )
 
-        btn_minus = Button(self, text="-", command=lambda: entry_var.set(entry_var.get() + " - "))
+        btn_minus = Button(self, text="-", command=lambda: self.entry_var.set(self.entry_var.get() + " - "))
         btn_minus.grid(
             column=2, row=6,
             sticky="ne",
@@ -209,13 +239,28 @@ class Calculator(tk.Tk):
 
     def evaluate(self, eq):
         """
-        Solves equation string input and returns solution
+        Evaluates arithmetic expression and returns solution
         """
-        eq = eq.lower()
-        eq = eq.replace("%", "/100") if ("%" in eq) else eq 
-        eq = eq.replace("x", "*") if ("x" in eq) else eq
 
-        return eval(eq)
+        try:
+            eq = eq.lower()
+            eq = eq.replace("%", "/100") if ("%" in eq) else eq 
+            eq = eq.replace("x", "*") if ("x" in eq) else eq
+            solution = eval(eq)
+        except:
+            solution = eq
+
+        return solution
+
+    def keypress_action(self, key):
+        """
+        Adds values of keys pressed to entry area
+        """
+        if (self.focus_get() != self.entry): 
+            """
+            This prevents inputing the same value into the entry twice if the focus is the entry
+            """
+            self.entry_var.set(self.entry_var.get() + key)
         
     def run(self):
         """
