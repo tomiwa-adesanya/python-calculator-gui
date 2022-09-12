@@ -36,4 +36,4 @@ Preview 1:
   
 Preview 2: 
 
-  ![gui-preview-2](/Data/img/preview-1.png)
+  ![gui-preview-2](/Data/img/preview-2.png)
