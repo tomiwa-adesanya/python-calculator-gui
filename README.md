@@ -19,6 +19,13 @@ Clone this repository unto your local device or just download the raw [main.py](
 
 Run [main.py](/main.py) and this should automatically create the GUI window. 
 
+If you don't have python installed in your computer, you can run the executable I have created from the source code without having python installed in your computer to use program.
+
+To run executable:  
+    STEP 1: download the zipped executable components from [here](https://github.com/tomiwa-adesanya/python-calculator-gui/raw/master/Data/dist/main.zip).   
+    STEP 2: unzip file file and search for `main.exe`.   
+    STEP 3: run `main.exe` by double clicking on it.  
+
 GUI Shortcuts:
   * `Ctrl+W` to close GUI window.
   * `Backspace` to delete last value typed in the textbox.
